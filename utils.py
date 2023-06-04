@@ -3,6 +3,15 @@ import re
 import glob
 import os
 
+
+def read_filelist(file_path):
+    filelist = []
+    with open(file_path, 'r') as f:
+        filelist = f.readlines()
+        filelist = [i.strip() for i in filelist]
+    return filelist
+
+
 def read_filenames(dir_paths):
     '''
         read mesh files or the label files
@@ -103,3 +112,21 @@ def read_dir(dir_path='./dataset/3D_scans_ds/', extension='vtk', constrain='FLP'
         if constrain in file or not constrain == '':
             files.append(file)
     return files
+
+
+def recursively_get_file(dir_path, ext):
+    ls = []
+    if os.path.isfile(dir_path):
+        return [dir_path]
+    files = os.listdir(dir_path)
+    for file in files:
+        if file == '.DS_Store':
+            continue
+        if os.path.isfile(f'{dir_path}/{file}'):
+            if f'.{ext}' in file:
+                ls.append(f'{dir_path}/{file}')
+            else:
+                return []
+        elif os.path.isdir(f'{dir_path}/{file}'):
+            ls += recursively_get_file(f'{dir_path}/{file}', ext)
+    return ls

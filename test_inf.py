@@ -146,7 +146,7 @@ def get_graph_feature(x, k=20, idx=None, dim9=False, device='cpu'):
     return feature      # (batch_size, 2*num_dims, num_points, k)
 
 
-def gen_metadata_inf(cfg: OmegaConf, mesh: vedo.Mesh, device='cuda'):
+def gen_metadata_inf(cfg: OmegaConf, mesh: vedo.Mesh, device='cuda', with_new_features=False):
     mesh = centering(mesh)
     N = mesh.ncells
     points = vedo.vtk2numpy(mesh.polydata().GetPoints().GetData())
@@ -164,14 +164,24 @@ def gen_metadata_inf(cfg: OmegaConf, mesh: vedo.Mesh, device='cuda'):
     nmeans = normals.mean(axis=0)
     nstds = normals.std(axis=0)
 
-    for i in range(3):
-        cells[:, i] = (cells[:, i] - means[i]) / stds[i] #point 1
-        cells[:, i+3] = (cells[:, i+3] - means[i]) / stds[i] #point 2
-        cells[:, i+6] = (cells[:, i+6] - means[i]) / stds[i] #point 3
-        barycenters[:,i] = (barycenters[:,i] - mins[i]) / (maxs[i]-mins[i])
-        normals[:,i] = (normals[:,i] - nmeans[i]) / nstds[i]
-
-    X = np.column_stack((cells, barycenters, normals))
+    if with_new_features:
+        faces = cells
+        face_centers = np.mean(faces.reshape(-1, 3, 3), axis=1)
+        face_normals = normals
+        corner_vectors = np.hstack((faces[:,0:3] - face_centers,
+                                    faces[:,3:6] - face_centers,
+                                    faces[:,6:9] - face_centers))
+        X = np.column_stack((corner_vectors, face_centers, face_normals))
+    
+    else:
+        for i in range(3):
+            cells[:, i] = (cells[:, i] - means[i]) / stds[i] #point 1
+            cells[:, i+3] = (cells[:, i+3] - means[i]) / stds[i] #point 2
+            cells[:, i+6] = (cells[:, i+6] - means[i]) / stds[i] #point 3
+            barycenters[:,i] = (barycenters[:,i] - mins[i]) / (maxs[i]-mins[i])
+            normals[:,i] = (normals[:,i] - nmeans[i]) / nstds[i]
+        X = np.column_stack((cells, barycenters, normals))
+        
     X = X.transpose(1, 0)
 
     meta = dict()
@@ -184,7 +194,7 @@ def gen_metadata_inf(cfg: OmegaConf, mesh: vedo.Mesh, device='cuda'):
     return meta
 
 
-def infer(cfg, model, mesh_file, cfg_path=None, ckpt_path=None, refine=True, device='cuda', print_time=False, with_raw_output=False):
+def infer(cfg, model, mesh_file, cfg_path=None, ckpt_path=None, refine=True, device='cuda', print_time=False, with_raw_output=False, with_new_features=False):
     if not cfg and cfg_path:
         cfg = OmegaConf.load(cfg_path)
     if len(cfg.infer.devices) == 1 and cfg.infer.accelerator == "gpu":
@@ -210,7 +220,7 @@ def infer(cfg, model, mesh_file, cfg_path=None, ckpt_path=None, refine=True, dev
 
     mesh_d = mesh.clone()
     predicted_labels_d = np.zeros([mesh_d.ncells, 1], dtype=np.int32)
-    input_data = gen_metadata_inf(cfg, mesh, device)
+    input_data = gen_metadata_inf(cfg, mesh, device, with_new_features)
     load_time = time.time() - start_time
 
     infer_start_time = time.time()
