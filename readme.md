@@ -10,7 +10,16 @@
                     -- OEJBIPTC_upper.json
         -- 3D_scans_per_patient_obj_files_b2
 
-## to start
+## for inference and visualize on single sample
 `pip install requirements.txt`
 
 `python test_inf.py`
+
+## for evaluation on the test set
+first `python make_test_set.py` to generate downsampled and cellwise labeled .vtk samples
+
+then run `python evaluation.py` 
+
+the `do_inf` function will predict on each sample, output with a json file
+
+the `do_eva` function will read the predicted results from that json file and evaluate the mIoU and accuracy

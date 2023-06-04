@@ -1,12 +1,10 @@
-from utils import read_filelist, get_sample_name, recursively_get_file
+from utils import get_sample_name, recursively_get_file
 import numpy as np
 import vedo
-from test_inf import infer, downsample
+from test_inf import infer
 from omegaconf import OmegaConf
 from model.LitModule import LitModule
 from tqdm import tqdm
-from joblib import Parallel, delayed
-from os import cpu_count
 import json
 
 
@@ -41,15 +39,22 @@ def inf_on_one_sample(mesh_path, cfg, model, dic, with_new_features=False):
     if sample_name in dic.keys():
         return
     mesh_ds = vedo.Mesh(mesh_path)
-    # mesh_ds = downsample(mesh)
     grdt = mesh_ds.celldata['labels']
     mesh_ds_pred = infer(cfg=cfg, model=model, mesh_file=mesh_ds, print_time=False, refine=True, with_raw_output=False, with_new_features=with_new_features)
     pred = mesh_ds_pred.celldata['labels']
     dic[sample_name] = {'ground_truth': grdt.tolist(), 'predict_result': pred.tolist()}
-    # print(dic.keys())
     
 
-def do_inf(mesh_path_list, cfg, model, output_path, is_parallel=True, with_new_features=False):
+def do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_features=False):
+    
+    eval_list = recursively_get_file(dataset_path, ext='vtk')
+    samples = [item for item in eval_list if 'upper' in item][:200]
+    print(f'get {len(samples)} files for evaluation')
+    
+    cfg = OmegaConf.load(cfg_path)
+    module = LitModule(cfg).load_from_checkpoint(checkpoint_path)
+    model = module.model.to(device)
+    model.eval()
 
     try:
         with open(output_path, 'r') as f:
@@ -57,12 +62,9 @@ def do_inf(mesh_path_list, cfg, model, output_path, is_parallel=True, with_new_f
     except:
         dic = dict()
     
-    if is_parallel:
-        Parallel(n_jobs=cpu_count())(delayed(inf_on_one_sample)(mesh_path, cfg, model, dic) for mesh_path in tqdm(mesh_path_list, desc='inferencing'))
-    else:
-        for mesh_path in tqdm(mesh_path_list, desc='inferencing'):
-            inf_on_one_sample(mesh_path, cfg, model, dic, with_new_features)
-    # print(dic)
+    for mesh_path in tqdm(samples, desc='inferencing'):
+        inf_on_one_sample(mesh_path, cfg, model, dic, with_new_features)
+        
     with open(output_path, "w") as f:
         json.dump(dic, f)
         
@@ -106,6 +108,7 @@ def do_eva(pred_path):
             accs += acc
         print(f'The average mIoU for {desc} is {mIoUs/len(metrics)}')
         print(f'The average accuracy for {desc} is {accs/len(metrics)}')
+        
 
 if __name__ == '__main__':
     mode = 'old'
@@ -116,15 +119,6 @@ if __name__ == '__main__':
     checkpoint_path = f'./checkpoints/iMeshSegNet_17_Classes_32_f_best_DSC_{mode}.ckpt'
     device = 'cuda'
     
-    eval_list = recursively_get_file(dataset_path, ext='vtk')
-    samples = [item for item in eval_list if 'upper' in item][:200]
-    print(f'get {len(samples)} files for evaluation')
-    
-    cfg = OmegaConf.load(cfg_path)
-    module = LitModule(cfg).load_from_checkpoint(checkpoint_path)
-    model = module.model.to(device)
-    model.eval()
-    
-    # do_inf(samples, cfg, model, output_path, is_parallel=False, with_new_features=with_new_feature)
+    do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_features=with_new_feature)
     
     do_eva(output_path)
