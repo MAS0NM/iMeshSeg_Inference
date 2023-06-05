@@ -195,22 +195,20 @@ def GetVTKTransformationMatrix(rotate_X=[-180, 180], rotate_Y=[-180, 180], rotat
     return matrix
         
         
-def augment(mesh_path, out_dir, mode, aug_num, existing_mesh_files, isRotate, isTranslate, isScale):
+def augment(mesh_path, out_dir, mode, aug_num, existing_mesh_files, isRotate, isTranslate, isScale, ext='.vtk'):
     if 'AUG' in mesh_path:
         return
     mesh_name = get_sample_name(mesh_path)
     if mode == 'flip':
         if 'FLP' in mesh_path:
             return
-        mesh_op_pth = os.path.join(out_dir, mesh_name + '_FLP' + '.vtk')
+        mesh_op_pth = os.path.join(out_dir, mesh_name + '_FLP' + ext)
         if mesh_op_pth in existing_mesh_files:
             # print(f'{mesh_path} exists, skip')
             return
         mesh = vedo.load(mesh_path)
         mesh.mirror(axis='x')
         mesh = centring(mesh)
-        if mesh.ncells != 10000:
-            print(mesh_path, mesh.celldata['labels'].shape)
         mesh.write(mesh_op_pth)
     else:
         for i in range(aug_num):
@@ -221,7 +219,7 @@ def augment(mesh_path, out_dir, mode, aug_num, existing_mesh_files, isRotate, is
                 transform_type += 'T'
             if isScale:
                 transform_type += 'S'
-            mesh_op_pth = os.path.join(out_dir, mesh_name+'_'+transform_type+"_AUG%02d_" %i + '.vtk')
+            mesh_op_pth = os.path.join(out_dir, mesh_name+'_'+transform_type+"_AUG%02d_" %i + ext)
             if mesh_op_pth in existing_mesh_files:
                 print(f'{mesh_path} exists, skip')
                 continue
@@ -236,18 +234,22 @@ def augment(mesh_path, out_dir, mode, aug_num, existing_mesh_files, isRotate, is
             mesh.write(mesh_op_pth)
             
         
-def do_augmentation(ip_dir, op_dir, aug_num, existing_mesh_files):
+def do_augmentation(ip_dir, op_dir, aug_num, existing_mesh_files, ext='.vtk', filelist=None):
     '''
         this function will first look into the ip_dir to make a filelist according to the files in there
-        then preform augmentation on each .vtk file
+        then perform augmentation on each .vtk file
     '''
     # filp the meshes to double the size
-    filels = glob.glob(f"{ip_dir}/*.vtk")
-    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'flip', aug_num, existing_mesh_files, False, False, False) for item in tqdm(filels, desc="flipping"))
+    if filelist:
+        filels = [i for i in filelist if i]
+    else:
+        filels = glob.glob(f"{ip_dir}/*.vtk")
+        
+    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'flip', aug_num, existing_mesh_files, False, False, False, ext) for item in tqdm(filels, desc="flipping"))
     # random tranform
-    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'trsf', aug_num, existing_mesh_files, True, False, False) for item in tqdm(filels, desc="rotating"))
-    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'trsf', aug_num, existing_mesh_files, False, True, False) for item in tqdm(filels, desc="translating"))
-    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'trsf', aug_num, existing_mesh_files, False, False, True) for item in tqdm(filels, desc="rescaling"))
+    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'trsf', aug_num, existing_mesh_files, True, False, False, ext) for item in tqdm(filels, desc="rotating"))
+    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'trsf', aug_num, existing_mesh_files, False, True, False, ext) for item in tqdm(filels, desc="translating"))
+    Parallel(n_jobs=cpu_count())(delayed(augment)(item, op_dir, 'trsf', aug_num, existing_mesh_files, False, False, True, ext) for item in tqdm(filels, desc="rescaling"))
     
 
 def make_labeled_mesh(jaw_path, lab_path, op_dir):

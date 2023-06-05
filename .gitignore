@@ -3,3 +3,4 @@ __pycache__
 dataset/3D_scans_per_patient_obj_files_b1/*
 dataset/3D_scans_per_patient_obj_files_b2/*
 *.vtk
+*.stl

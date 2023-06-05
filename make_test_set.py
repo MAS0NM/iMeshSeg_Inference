@@ -2,6 +2,11 @@ from utils import read_dir, read_filenames, filelist_checker
 from preprocessing import *
 from os import cpu_count
 
+
+def make_augmentated_stl(filelist, stl_dir):
+    existing_mesh_files = read_dir(dir_path=stl_dir, extension='stl', constrain='')
+    do_augmentation('', stl_dir, aug_num=1, existing_mesh_files=existing_mesh_files, filelist=filelist, ext='.stl')
+
 if __name__ == '__main__':
     dir_paths = ['./dataset/3D_scans_per_patient_obj_files_b1', './dataset/3D_scans_per_patient_obj_files_b2']
     # label diractory in those 2 batches
@@ -18,10 +23,12 @@ if __name__ == '__main__':
     fileList_lower = '/fileList_lower.txt'
     fileList_upper = '/fileList_upper.txt'
     
-    target_cells = 10001
-    existing_mesh_files = read_dir(dir_path=downsampled_dataset, extension='vtk', constrain='')
-    do_downsample(upper_jaws, upper_labels, target_cells=target_cells, ds_dir = downsampled_dataset)
-    print(f"downsampling is done")
-    do_augmentation(ip_dir=downsampled_dataset, op_dir=downsampled_dataset, aug_num=1, existing_mesh_files=existing_mesh_files)
-    print(f"augmentation is done")
+    # target_cells = 10001
+    # existing_mesh_files = read_dir(dir_path=downsampled_dataset, extension='vtk', constrain='')
+    # do_downsample(upper_jaws, upper_labels, target_cells=target_cells, ds_dir = downsampled_dataset)
+    # print(f"downsampling is done")
+    # do_augmentation(ip_dir=downsampled_dataset, op_dir=downsampled_dataset, aug_num=1, existing_mesh_files=existing_mesh_files)
+    # print(f"augmentation is done")
+    
+    make_augmentated_stl(upper_jaws[:20], './dataset/test_set_stl')
     

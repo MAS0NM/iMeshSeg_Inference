@@ -9,6 +9,8 @@
                     -- OEJBIPTC_lower.json
                     -- OEJBIPTC_upper.json
         -- 3D_scans_per_patient_obj_files_b2
+        -- test_set
+        -- test_set_stl
 
 ## for inference and visualize on single sample
 `pip install requirements.txt`

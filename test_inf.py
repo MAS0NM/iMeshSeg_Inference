@@ -9,6 +9,7 @@ import time
 from tqdm import tqdm
 import tkinter as tk
 import torch
+import glob
 
 
 def downsample(mesh, target_cells=10000):
@@ -297,25 +298,27 @@ def infer(cfg, model, mesh_file, cfg_path=None, ckpt_path=None, refine=True, dev
         return mesh3
     
 
-def test_inf(mesh_path):
+def test_inf(mesh_path, cfg, model, with_refine=True, with_new_features=False, with_high_res=True):
     print('start inf')
     time0 = time.time()
     mesh = vedo.Mesh(mesh_path)
-    mesh_ds = downsample(mesh)
+    mesh_ds = downsample(mesh) if mesh.ncells > 10001 else mesh
     time1 = time.time()
     print(f'loading and downsample time: {time1 - time0}')
-    mesh_ds_pred, pred_tensor = infer(cfg=cfg, model=model, mesh_file=mesh_ds, refine=True, with_raw_output=True)
+    mesh_ds_pred, pred_tensor = infer(cfg=cfg, model=model, mesh_file=mesh_ds, refine=with_refine, with_raw_output=True, with_new_features=with_new_features)
     time2 = time.time()
     print(f'inference time: {time2 - time1}')
     # visualize_mesh(mesh_ds_pred)
     time3 = time.time()
-    mesh_obj = high_resolution_restore(mesh_ds_pred, mesh, pred_tensor)
+    mesh_obj = high_resolution_restore(mesh_ds_pred, mesh, pred_tensor) if with_high_res else mesh_ds_pred
     print(f'high resolution restore time: {time3 - time2}')
     print(f'total time: {time3-time0}')
     visualize_mesh(mesh_obj)
     
     
 if __name__ == '__main__':
+    mode = 'new'
+    with_new_features = True if mode == 'new' else False
     
     dir_paths = ['./dataset/3D_scans_per_patient_obj_files_b1', './dataset/3D_scans_per_patient_obj_files_b2']
     label_paths = [dir_path + '/ground-truth_labels_instances_b' + str(idx+1) for idx, dir_path in enumerate(dir_paths)]
@@ -323,19 +326,20 @@ if __name__ == '__main__':
     lower_labels, upper_labels = read_filenames(label_paths)
     lower_jaws, lower_labels = filelist_checker(lower_jaws, lower_labels)
     upper_jaws, upper_labels = filelist_checker(upper_jaws, upper_labels)
+    upper_jaws = glob.glob(f"./dataset/test_set_stl/*.stl")
     
     print('loading model')
     cfg = OmegaConf.load("config/default.yaml")
-    module = LitModule(cfg).load_from_checkpoint('./checkpoints/iMeshSegNet_17_Classes_32_f_best_DSC-v2.ckpt')
+    module = LitModule(cfg).load_from_checkpoint(f'./checkpoints/iMeshSegNet_17_Classes_32_f_best_DSC_{mode}.ckpt')
     model = module.model.to('cuda')
     model.eval()
-    
+    print('ready')
     # mesh_idx = 0
     # mesh_path = upper_jaws[mesh_idx]
     # mesh_label_path = upper_labels[mesh_idx]
     
     window = tk.Tk()
-    window.title("mesh annotation viewer")
+    window.title(f"mesh viewer {mode}")
     
     window.geometry("400x600")
     
@@ -346,6 +350,6 @@ if __name__ == '__main__':
         listbox.insert(tk.END, name.split('/')[-1])
 
     listbox.bind("<Double-Button-1>", lambda x:\
-        test_inf(upper_jaws[listbox.curselection()[0]]))
+        test_inf(upper_jaws[listbox.curselection()[0]], cfg, model, with_refine=True, with_new_features=with_new_features, with_high_res=False))
     listbox.pack(side=tk.LEFT, fill=tk.BOTH)
     window.mainloop()

@@ -9,15 +9,14 @@ import json
 
 
 def cal_mIoU(grtr, pred):
-    grtr, pred = np.array(grtr), np.array(grtr)
-    confusion_matrix = np.zeros((17, 17))
-    for i in range(len(pred)):
-        confusion_matrix[pred[i], grtr[i]] += 1
-    IoUs = np.diag(confusion_matrix) / (confusion_matrix.sum(1) + confusion_matrix.sum(0) - np.diag(confusion_matrix))
-    IoUs[np.isnan(IoUs)] = 0
-    mIoU = np.nanmean(IoUs)
+    grtr, pred = np.array(grtr), np.array(pred)
+    # confusion_matrix = np.zeros((17, 17))
+    # for i in range(len(pred)):
+    #     confusion_matrix[pred[i], grtr[i]] += 1
+    # IoUs = np.diag(confusion_matrix) / (confusion_matrix.sum(1) + confusion_matrix.sum(0) - np.diag(confusion_matrix))
+    mIoU = (grtr & pred).sum() / (grtr | pred).sum()
     return mIoU
-
+    
 
 def cal_acc(grtr, pred):
     grtr, pred = np.array(grtr), np.array(pred)
@@ -111,7 +110,7 @@ def do_eva(pred_path):
         
 
 if __name__ == '__main__':
-    mode = 'old'
+    mode = 'new'
     with_new_feature = False if mode == 'old' else True
     dataset_path = './dataset/test_set'
     output_path = f'./preds_{mode}.json'
