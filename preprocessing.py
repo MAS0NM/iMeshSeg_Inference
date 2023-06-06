@@ -99,6 +99,18 @@ def rearrange(nparry):
     return nparry
 
 
+def flip_relabel(nparry):
+    # 1 14, 2 13, 3 12, 4 11, 5 10, 6 9, 7 8, 15 16
+    pairs = [(1, 14), (2, 13), (3, 12), (4, 11), (5, 10), (6, 9), (7, 8), (15, 16)]
+    for x, y in pairs:
+        index_x = np.where(nparry == x)
+        index_y = np.where(nparry == y)
+        np.put(nparry, index_x, y)
+        np.put(nparry, index_y, x)
+        
+    return nparry
+
+
 def downsample_with_index(mesh, target_cells):
     mesh_ds = mesh.clone()
     mesh_ds = mesh_ds.decimate(target_cells / mesh.ncells)
@@ -208,6 +220,7 @@ def augment(mesh_path, out_dir, mode, aug_num, existing_mesh_files, isRotate, is
             return
         mesh = vedo.load(mesh_path)
         mesh.mirror(axis='x')
+        mesh.celldata['labels'] = flip_relabel(mesh.celldata['labels'])
         mesh = centring(mesh)
         mesh.write(mesh_op_pth)
     else:

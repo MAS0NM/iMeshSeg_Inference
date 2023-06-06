@@ -10,6 +10,7 @@ from tqdm import tqdm
 import tkinter as tk
 import torch
 import glob
+import vtk
 
 
 def downsample(mesh, target_cells=10000):
@@ -212,6 +213,12 @@ def infer(cfg, model, mesh_file, cfg_path=None, ckpt_path=None, refine=True, dev
         mesh = vedo.load(mesh_file)
     else:
         mesh = mesh_file
+    
+    # transform = vtk.vtkTransform()
+    # transform.RotateX(90)
+    # matrix = transform.GetMatrix()
+    # mesh.apply_transform(matrix)
+        
     N = mesh.ncells
     points = vedo.vtk2numpy(mesh.polydata().GetPoints().GetData())
     ids = vedo.vtk2numpy(mesh.polydata().GetPolys().GetData()).reshape((N, -1))[:,1:]
@@ -317,16 +324,18 @@ def test_inf(mesh_path, cfg, model, with_refine=True, with_new_features=False, w
     
     
 if __name__ == '__main__':
-    mode = 'new'
+    mode = 'old'
     with_new_features = True if mode == 'new' else False
     
-    dir_paths = ['./dataset/3D_scans_per_patient_obj_files_b1', './dataset/3D_scans_per_patient_obj_files_b2']
-    label_paths = [dir_path + '/ground-truth_labels_instances_b' + str(idx+1) for idx, dir_path in enumerate(dir_paths)]
-    lower_jaws, upper_jaws = read_filenames(dir_paths)
-    lower_labels, upper_labels = read_filenames(label_paths)
-    lower_jaws, lower_labels = filelist_checker(lower_jaws, lower_labels)
-    upper_jaws, upper_labels = filelist_checker(upper_jaws, upper_labels)
-    upper_jaws = glob.glob(f"./dataset/test_set_stl/*.stl")
+    # dir_paths = ['./dataset/3D_scans_per_patient_obj_files_b1', './dataset/3D_scans_per_patient_obj_files_b2']
+    # label_paths = [dir_path + '/ground-truth_labels_instances_b' + str(idx+1) for idx, dir_path in enumerate(dir_paths)]
+    # lower_jaws, upper_jaws = read_filenames(dir_paths)
+    # lower_labels, upper_labels = read_filenames(label_paths)
+    # lower_jaws, lower_labels = filelist_checker(lower_jaws, lower_labels)
+    # upper_jaws, upper_labels = filelist_checker(upper_jaws, upper_labels)
+    # # upper_jaws = glob.glob(f"./dataset/test_set_stl/*.stl")
+    # # upper_jaws = glob.glob(f"./dataset/NDCS_dataset/a/*.obj")
+    samples = glob.glob(f"./dataset/test_set/*.vtk")
     
     print('loading model')
     cfg = OmegaConf.load("config/default.yaml")
@@ -346,10 +355,10 @@ if __name__ == '__main__':
     listbox = tk.Listbox(window)
     listbox.pack(fill=tk.BOTH, expand=1)    
     
-    for name in upper_jaws:
+    for name in samples:
         listbox.insert(tk.END, name.split('/')[-1])
 
     listbox.bind("<Double-Button-1>", lambda x:\
-        test_inf(upper_jaws[listbox.curselection()[0]], cfg, model, with_refine=True, with_new_features=with_new_features, with_high_res=False))
+        test_inf(samples[listbox.curselection()[0]], cfg, model, with_refine=True, with_new_features=with_new_features, with_high_res=False))
     listbox.pack(side=tk.LEFT, fill=tk.BOTH)
     window.mainloop()

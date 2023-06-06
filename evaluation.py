@@ -6,23 +6,21 @@ from omegaconf import OmegaConf
 from model.LitModule import LitModule
 from tqdm import tqdm
 import json
+from sklearn.metrics import accuracy_score
 
-
+    
 def cal_mIoU(grtr, pred):
     grtr, pred = np.array(grtr), np.array(pred)
-    # confusion_matrix = np.zeros((17, 17))
-    # for i in range(len(pred)):
-    #     confusion_matrix[pred[i], grtr[i]] += 1
-    # IoUs = np.diag(confusion_matrix) / (confusion_matrix.sum(1) + confusion_matrix.sum(0) - np.diag(confusion_matrix))
     mIoU = (grtr & pred).sum() / (grtr | pred).sum()
     return mIoU
-    
+
 
 def cal_acc(grtr, pred):
-    grtr, pred = np.array(grtr), np.array(pred)
-    acc = np.sum(grtr == pred)
-    return acc / len(grtr)
-    
+    # grtr, pred = np.array(grtr), np.array(pred)
+    # acc = np.sum(grtr == pred)
+    # return acc / len(grtr)
+    return accuracy_score(grtr, pred)
+
 
 def read_into_dict(file_path):
     with open(file_path, 'r') as f:
@@ -45,9 +43,13 @@ def inf_on_one_sample(mesh_path, cfg, model, dic, with_new_features=False):
     
 
 def do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_features=False):
-    
+    '''
+        will get all the vtk files in dataset_path to do inference
+        also check in the output json file, search by the sample name and skip those who's already predicted
+    '''
     eval_list = recursively_get_file(dataset_path, ext='vtk')
-    samples = [item for item in eval_list if 'upper' in item][:200]
+    # samples = [item for item in eval_list if 'upper' in item][:200]
+    samples = eval_list[:200]
     print(f'get {len(samples)} files for evaluation')
     
     cfg = OmegaConf.load(cfg_path)
@@ -78,7 +80,8 @@ def eva_on_one_sample(item):
     return sample_name, mIoU, acc
 
         
-def do_eva(pred_path):
+def do_eva(pred_path, constrain='upper'):
+    print(f'evaluation for {constrain}')
     with open(pred_path, 'r') as f:
         pred_res = json.load(f)
         
@@ -89,6 +92,8 @@ def do_eva(pred_path):
     
     for item in pred_res.items():
         sample_name, mIoU, acc = eva_on_one_sample(item)
+        if constrain not in sample_name:
+            continue
         if '_FLP' in sample_name:
             flip.append((mIoU, acc))
         elif '_R' in sample_name:
@@ -101,16 +106,20 @@ def do_eva(pred_path):
             orig.append((mIoU, acc))
             
     for metrics, desc in [(orig, 'original'), (flip, 'flipped'), (rota, 'rotated'), (tran, 'translated'), (scal, 'rescaled')]:
+        if not metrics:
+            continue
         mIoUs, accs = 0, 0
         for mIoU, acc in metrics:
             mIoUs += mIoU
             accs += acc
-        print(f'The average mIoU for {desc} is {mIoUs/len(metrics)}')
-        print(f'The average accuracy for {desc} is {accs/len(metrics)}')
+        std_mIoU = np.std(np.array([i[0] for i in metrics]))
+        std_acc = np.std(np.array([i[1] for i in metrics]))
+        print(f'The average mIoU for {desc} is {mIoUs/len(metrics)} ± {std_mIoU}')
+        print(f'The average accuracy for {desc} is {accs/len(metrics)} ± {std_acc}')
         
 
 if __name__ == '__main__':
-    mode = 'new'
+    mode = 'old'
     with_new_feature = False if mode == 'old' else True
     dataset_path = './dataset/test_set'
     output_path = f'./preds_{mode}.json'
@@ -120,4 +129,5 @@ if __name__ == '__main__':
     
     do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_features=with_new_feature)
     
-    do_eva(output_path)
+    do_eva(output_path, constrain='upper')
+    do_eva(output_path, constrain='lower')
