@@ -7,12 +7,19 @@ from model.LitModule import LitModule
 from tqdm import tqdm
 import json
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 
-    
-def cal_mIoU(grtr, pred):
-    grtr, pred = np.array(grtr), np.array(pred)
-    mIoU = (grtr & pred).sum() / (grtr | pred).sum()
-    return mIoU
+
+def cal_mIoU(grtr, pred, cm=None):
+    # grtr, pred = np.array(grtr), np.array(pred)
+    # mIoU = (grtr & pred).sum() / (grtr | pred).sum()
+    # return mIoU
+    cm = confusion_matrix(grtr, pred) if not cm else cm
+    TP = np.diag(cm)
+    FP = cm.sum(axis=0) - TP
+    FN = cm.sum(axis=1) - TP
+    # TN = cm.sum() - (FP + FN + TP)
+    return np.mean(TP / (FN + FP + TP + np.finfo(float).eps)) #eps = 2**-52, used to avoid divided by zero
 
 
 def cal_acc(grtr, pred):

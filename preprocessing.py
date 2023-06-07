@@ -41,60 +41,16 @@ def set_face_label(mesh, labels_by_point, mode='count'):
 
             
 def rearrange(nparry):
-    # 32 permanent teeth
-    nparry[nparry == 17] = 1
-    nparry[nparry == 37] = 1
-    nparry[nparry == 16] = 2
-    nparry[nparry == 36] = 2
-    nparry[nparry == 15] = 3
-    nparry[nparry == 35] = 3
-    nparry[nparry == 14] = 4
-    nparry[nparry == 34] = 4
-    nparry[nparry == 13] = 5
-    nparry[nparry == 33] = 5
-    nparry[nparry == 12] = 6
-    nparry[nparry == 32] = 6
-    nparry[nparry == 11] = 7
-    nparry[nparry == 31] = 7
-    nparry[nparry == 21] = 8
-    nparry[nparry == 41] = 8
-    nparry[nparry == 22] = 9
-    nparry[nparry == 42] = 9
-    nparry[nparry == 23] = 10
-    nparry[nparry == 43] = 10
-    nparry[nparry == 24] = 11
-    nparry[nparry == 44] = 11
-    nparry[nparry == 25] = 12
-    nparry[nparry == 45] = 12
-    nparry[nparry == 26] = 13
-    nparry[nparry == 46] = 13
-    nparry[nparry == 27] = 14
-    nparry[nparry == 47] = 14
-    nparry[nparry == 18] = 15
-    nparry[nparry == 38] = 15
-    nparry[nparry == 28] = 16
-    nparry[nparry == 48] = 16
-    # deciduous teeth
-    nparry[nparry == 55] = 3
-    nparry[nparry == 55] = 3
-    nparry[nparry == 54] = 4
-    nparry[nparry == 74] = 4
-    nparry[nparry == 53] = 5
-    nparry[nparry == 73] = 5
-    nparry[nparry == 52] = 6
-    nparry[nparry == 72] = 6
-    nparry[nparry == 51] = 7
-    nparry[nparry == 71] = 7
-    nparry[nparry == 61] = 8
-    nparry[nparry == 81] = 8
-    nparry[nparry == 62] = 9
-    nparry[nparry == 82] = 9
-    nparry[nparry == 63] = 10
-    nparry[nparry == 83] = 10
-    nparry[nparry == 64] = 11
-    nparry[nparry == 84] = 11
-    nparry[nparry == 65] = 12
-    nparry[nparry == 85] = 12
+    
+    pairs = [(17, 37, 1), (16, 36, 2), (15, 35, 3), (14, 34, 4), (13, 33, 5), (12, 32, 6), (11, 31, 7),\
+        (21, 41, 8), (22, 42, 9), (23, 43, 10), (24, 44, 11), (25, 45, 12), (26, 46, 13), (27, 47, 14),\
+            (18, 38, 15), (28, 48, 16)]
+    
+    for x, y, z in pairs:
+        index_x = np.where(nparry == x)
+        index_y = np.where(nparry == y)
+        np.put(nparry, index_x, z)
+        np.put(nparry, index_y, z)
     
     return nparry
 
