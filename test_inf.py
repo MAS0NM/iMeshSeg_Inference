@@ -324,7 +324,7 @@ def test_inf(mesh_path, cfg, model, with_refine=True, with_new_features=False, w
     
     
 if __name__ == '__main__':
-    mode = 'old'
+    mode = 'ori'
     with_new_features = True if mode == 'new' else False
     
     # dir_paths = ['./dataset/3D_scans_per_patient_obj_files_b1', './dataset/3D_scans_per_patient_obj_files_b2']
@@ -339,7 +339,7 @@ if __name__ == '__main__':
     
     print('loading model')
     cfg = OmegaConf.load("config/default.yaml")
-    module = LitModule(cfg).load_from_checkpoint(f'./checkpoints/iMeshSegNet_17_Classes_32_f_best_DSC_{mode}.ckpt')
+    module = LitModule(cfg).load_from_checkpoint(f'./checkpoints/iMeshSegNet_mix_{mode}_17_Classes_32_f_best_DSC.ckpt')
     model = module.model.to('cuda')
     model.eval()
     print('ready')

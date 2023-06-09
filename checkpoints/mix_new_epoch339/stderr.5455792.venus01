@@ -1,0 +1,425 @@
+Global seed set to 42
+/home/svu/e0983169/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/accelerator_connector.py:447: LightningDeprecationWarning: Setting `Trainer(gpus=1)` is deprecated in v1.7 and will be removed in v2.0. Please use `Trainer(accelerator='gpu', devices=1)` instead.
+  rank_zero_deprecation(
+/home/svu/e0983169/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/accelerator_connector.py:467: UserWarning: The flag `devices=[0]` will be ignored, instead the device specific number 1 will be used
+  rank_zero_warn(
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+/home/svu/e0983169/.local/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:616: UserWarning: Checkpoint directory /hpctmp/e0983169/checkpoints exists and is not empty.
+  rank_zero_warn(f"Checkpoint directory {dirpath} exists and is not empty.")
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name      | Type                  | Params
+----------------------------------------------------
+0 | model     | iMeshSegNet           | 1.7 M 
+1 | lovasz_fn | Lovasz_Softmax_Flat   | 0     
+2 | ce_fn     | CrossEntropyLoss      | 0     
+3 | loss_fn   | Generalized_Dice_Loss | 0     
+----------------------------------------------------
+1.7 M     Trainable params
+0         Non-trainable params
+1.7 M     Total params
+6.923     Total estimated model params size (MB)
+Epoch 0, global step 100: 'val_DSC' reached 0.31506 (best 0.31506), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 1, global step 200: 'val_DSC' reached 0.37411 (best 0.37411), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 2, global step 300: 'val_DSC' reached 0.51160 (best 0.51160), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 3, global step 400: 'val_DSC' was not in top 1
+Epoch 4, global step 500: 'val_DSC' reached 0.56119 (best 0.56119), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 5, global step 600: 'val_DSC' reached 0.66323 (best 0.66323), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 6, global step 700: 'val_DSC' reached 0.69251 (best 0.69251), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 7, global step 800: 'val_DSC' reached 0.71817 (best 0.71817), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 8, global step 900: 'val_DSC' was not in top 1
+Epoch 9, global step 1000: 'val_DSC' was not in top 1
+Epoch 10, global step 1100: 'val_DSC' was not in top 1
+Epoch 11, global step 1200: 'val_DSC' reached 0.75445 (best 0.75445), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 12, global step 1300: 'val_DSC' was not in top 1
+Epoch 13, global step 1400: 'val_DSC' was not in top 1
+Epoch 14, global step 1500: 'val_DSC' reached 0.76692 (best 0.76692), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 15, global step 1600: 'val_DSC' was not in top 1
+Epoch 16, global step 1700: 'val_DSC' was not in top 1
+Epoch 17, global step 1800: 'val_DSC' was not in top 1
+Epoch 18, global step 1900: 'val_DSC' reached 0.76982 (best 0.76982), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 19, global step 2000: 'val_DSC' was not in top 1
+Epoch 20, global step 2100: 'val_DSC' reached 0.80707 (best 0.80707), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 21, global step 2200: 'val_DSC' reached 0.81387 (best 0.81387), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 22, global step 2300: 'val_DSC' was not in top 1
+Epoch 23, global step 2400: 'val_DSC' was not in top 1
+Epoch 24, global step 2500: 'val_DSC' was not in top 1
+Epoch 25, global step 2600: 'val_DSC' was not in top 1
+Epoch 26, global step 2700: 'val_DSC' was not in top 1
+Epoch 27, global step 2800: 'val_DSC' was not in top 1
+Epoch 28, global step 2900: 'val_DSC' reached 0.81697 (best 0.81697), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 29, global step 3000: 'val_DSC' was not in top 1
+Epoch 30, global step 3100: 'val_DSC' was not in top 1
+Epoch 31, global step 3200: 'val_DSC' reached 0.81986 (best 0.81986), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 32, global step 3300: 'val_DSC' was not in top 1
+Epoch 33, global step 3400: 'val_DSC' reached 0.82219 (best 0.82219), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 34, global step 3500: 'val_DSC' was not in top 1
+Epoch 35, global step 3600: 'val_DSC' reached 0.82461 (best 0.82461), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 36, global step 3700: 'val_DSC' was not in top 1
+Epoch 37, global step 3800: 'val_DSC' was not in top 1
+Epoch 38, global step 3900: 'val_DSC' was not in top 1
+Epoch 39, global step 4000: 'val_DSC' was not in top 1
+Epoch 40, global step 4100: 'val_DSC' was not in top 1
+Epoch 41, global step 4200: 'val_DSC' was not in top 1
+Epoch 42, global step 4300: 'val_DSC' was not in top 1
+Epoch 43, global step 4400: 'val_DSC' reached 0.82502 (best 0.82502), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 44, global step 4500: 'val_DSC' was not in top 1
+Epoch 45, global step 4600: 'val_DSC' was not in top 1
+Epoch 46, global step 4700: 'val_DSC' reached 0.82556 (best 0.82556), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 47, global step 4800: 'val_DSC' reached 0.82744 (best 0.82744), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 48, global step 4900: 'val_DSC' was not in top 1
+Epoch 49, global step 5000: 'val_DSC' was not in top 1
+Epoch 50, global step 5100: 'val_DSC' was not in top 1
+Epoch 51, global step 5200: 'val_DSC' was not in top 1
+Epoch 52, global step 5300: 'val_DSC' was not in top 1
+Epoch 53, global step 5400: 'val_DSC' was not in top 1
+Epoch 54, global step 5500: 'val_DSC' was not in top 1
+Epoch 55, global step 5600: 'val_DSC' was not in top 1
+Epoch 56, global step 5700: 'val_DSC' was not in top 1
+Epoch 57, global step 5800: 'val_DSC' was not in top 1
+Epoch 58, global step 5900: 'val_DSC' was not in top 1
+Epoch 59, global step 6000: 'val_DSC' was not in top 1
+Epoch 60, global step 6100: 'val_DSC' was not in top 1
+Epoch 61, global step 6200: 'val_DSC' was not in top 1
+Epoch 62, global step 6300: 'val_DSC' was not in top 1
+Epoch 63, global step 6400: 'val_DSC' was not in top 1
+Epoch 64, global step 6500: 'val_DSC' was not in top 1
+Epoch 65, global step 6600: 'val_DSC' was not in top 1
+Epoch 66, global step 6700: 'val_DSC' was not in top 1
+Epoch 67, global step 6800: 'val_DSC' was not in top 1
+Epoch 68, global step 6900: 'val_DSC' reached 0.82798 (best 0.82798), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 69, global step 7000: 'val_DSC' was not in top 1
+Epoch 70, global step 7100: 'val_DSC' was not in top 1
+Epoch 71, global step 7200: 'val_DSC' was not in top 1
+Epoch 72, global step 7300: 'val_DSC' was not in top 1
+Epoch 73, global step 7400: 'val_DSC' was not in top 1
+Epoch 74, global step 7500: 'val_DSC' was not in top 1
+Epoch 75, global step 7600: 'val_DSC' was not in top 1
+Epoch 76, global step 7700: 'val_DSC' was not in top 1
+Epoch 77, global step 7800: 'val_DSC' was not in top 1
+Epoch 78, global step 7900: 'val_DSC' was not in top 1
+Epoch 79, global step 8000: 'val_DSC' was not in top 1
+Epoch 80, global step 8100: 'val_DSC' was not in top 1
+Epoch 81, global step 8200: 'val_DSC' was not in top 1
+Epoch 82, global step 8300: 'val_DSC' was not in top 1
+Epoch 83, global step 8400: 'val_DSC' was not in top 1
+Epoch 84, global step 8500: 'val_DSC' was not in top 1
+Epoch 85, global step 8600: 'val_DSC' was not in top 1
+Epoch 86, global step 8700: 'val_DSC' was not in top 1
+Epoch 87, global step 8800: 'val_DSC' was not in top 1
+Epoch 88, global step 8900: 'val_DSC' was not in top 1
+Epoch 89, global step 9000: 'val_DSC' reached 0.82821 (best 0.82821), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 90, global step 9100: 'val_DSC' was not in top 1
+Epoch 91, global step 9200: 'val_DSC' was not in top 1
+Epoch 92, global step 9300: 'val_DSC' was not in top 1
+Epoch 93, global step 9400: 'val_DSC' was not in top 1
+Epoch 94, global step 9500: 'val_DSC' was not in top 1
+Epoch 95, global step 9600: 'val_DSC' was not in top 1
+Epoch 96, global step 9700: 'val_DSC' was not in top 1
+Epoch 97, global step 9800: 'val_DSC' was not in top 1
+Epoch 98, global step 9900: 'val_DSC' was not in top 1
+Epoch 99, global step 10000: 'val_DSC' was not in top 1
+Epoch 100, global step 10100: 'val_DSC' was not in top 1
+Epoch 101, global step 10200: 'val_DSC' was not in top 1
+Epoch 102, global step 10300: 'val_DSC' was not in top 1
+Epoch 103, global step 10400: 'val_DSC' was not in top 1
+Epoch 104, global step 10500: 'val_DSC' was not in top 1
+Epoch 105, global step 10600: 'val_DSC' was not in top 1
+Epoch 106, global step 10700: 'val_DSC' was not in top 1
+Epoch 107, global step 10800: 'val_DSC' was not in top 1
+Epoch 108, global step 10900: 'val_DSC' was not in top 1
+Epoch 109, global step 11000: 'val_DSC' was not in top 1
+Epoch 110, global step 11100: 'val_DSC' was not in top 1
+Epoch 111, global step 11200: 'val_DSC' was not in top 1
+Epoch 112, global step 11300: 'val_DSC' was not in top 1
+Epoch 113, global step 11400: 'val_DSC' was not in top 1
+Epoch 114, global step 11500: 'val_DSC' was not in top 1
+Epoch 115, global step 11600: 'val_DSC' was not in top 1
+Epoch 116, global step 11700: 'val_DSC' was not in top 1
+Epoch 117, global step 11800: 'val_DSC' was not in top 1
+Epoch 118, global step 11900: 'val_DSC' was not in top 1
+Epoch 119, global step 12000: 'val_DSC' was not in top 1
+Epoch 120, global step 12100: 'val_DSC' was not in top 1
+Epoch 121, global step 12200: 'val_DSC' was not in top 1
+Epoch 122, global step 12300: 'val_DSC' was not in top 1
+Epoch 123, global step 12400: 'val_DSC' was not in top 1
+Epoch 124, global step 12500: 'val_DSC' was not in top 1
+Epoch 125, global step 12600: 'val_DSC' was not in top 1
+Epoch 126, global step 12700: 'val_DSC' was not in top 1
+Epoch 127, global step 12800: 'val_DSC' was not in top 1
+Epoch 128, global step 12900: 'val_DSC' was not in top 1
+Epoch 129, global step 13000: 'val_DSC' was not in top 1
+Epoch 130, global step 13100: 'val_DSC' was not in top 1
+Epoch 131, global step 13200: 'val_DSC' was not in top 1
+Epoch 132, global step 13300: 'val_DSC' was not in top 1
+Epoch 133, global step 13400: 'val_DSC' was not in top 1
+Epoch 134, global step 13500: 'val_DSC' was not in top 1
+Epoch 135, global step 13600: 'val_DSC' was not in top 1
+Epoch 136, global step 13700: 'val_DSC' was not in top 1
+Epoch 137, global step 13800: 'val_DSC' was not in top 1
+Epoch 138, global step 13900: 'val_DSC' was not in top 1
+Epoch 139, global step 14000: 'val_DSC' was not in top 1
+Epoch 140, global step 14100: 'val_DSC' was not in top 1
+Epoch 141, global step 14200: 'val_DSC' was not in top 1
+Epoch 142, global step 14300: 'val_DSC' was not in top 1
+Epoch 143, global step 14400: 'val_DSC' was not in top 1
+Epoch 144, global step 14500: 'val_DSC' was not in top 1
+Epoch 145, global step 14600: 'val_DSC' was not in top 1
+Epoch 146, global step 14700: 'val_DSC' was not in top 1
+Epoch 147, global step 14800: 'val_DSC' was not in top 1
+Epoch 148, global step 14900: 'val_DSC' was not in top 1
+Epoch 149, global step 15000: 'val_DSC' was not in top 1
+Epoch 150, global step 15100: 'val_DSC' was not in top 1
+Epoch 151, global step 15200: 'val_DSC' was not in top 1
+Epoch 152, global step 15300: 'val_DSC' was not in top 1
+Epoch 153, global step 15400: 'val_DSC' was not in top 1
+Epoch 154, global step 15500: 'val_DSC' was not in top 1
+Epoch 155, global step 15600: 'val_DSC' was not in top 1
+Epoch 156, global step 15700: 'val_DSC' was not in top 1
+Epoch 157, global step 15800: 'val_DSC' was not in top 1
+Epoch 158, global step 15900: 'val_DSC' was not in top 1
+Epoch 159, global step 16000: 'val_DSC' was not in top 1
+Epoch 160, global step 16100: 'val_DSC' was not in top 1
+Epoch 161, global step 16200: 'val_DSC' was not in top 1
+Epoch 162, global step 16300: 'val_DSC' was not in top 1
+Epoch 163, global step 16400: 'val_DSC' was not in top 1
+Epoch 164, global step 16500: 'val_DSC' was not in top 1
+Epoch 165, global step 16600: 'val_DSC' was not in top 1
+Epoch 166, global step 16700: 'val_DSC' was not in top 1
+Epoch 167, global step 16800: 'val_DSC' was not in top 1
+Epoch 168, global step 16900: 'val_DSC' was not in top 1
+Epoch 169, global step 17000: 'val_DSC' was not in top 1
+Epoch 170, global step 17100: 'val_DSC' was not in top 1
+Epoch 171, global step 17200: 'val_DSC' was not in top 1
+Epoch 172, global step 17300: 'val_DSC' was not in top 1
+Epoch 173, global step 17400: 'val_DSC' was not in top 1
+Epoch 174, global step 17500: 'val_DSC' was not in top 1
+Epoch 175, global step 17600: 'val_DSC' was not in top 1
+Epoch 176, global step 17700: 'val_DSC' was not in top 1
+Epoch 177, global step 17800: 'val_DSC' was not in top 1
+Epoch 178, global step 17900: 'val_DSC' was not in top 1
+Epoch 179, global step 18000: 'val_DSC' was not in top 1
+Epoch 180, global step 18100: 'val_DSC' was not in top 1
+Epoch 181, global step 18200: 'val_DSC' was not in top 1
+Epoch 182, global step 18300: 'val_DSC' was not in top 1
+Epoch 183, global step 18400: 'val_DSC' was not in top 1
+Epoch 184, global step 18500: 'val_DSC' was not in top 1
+Epoch 185, global step 18600: 'val_DSC' was not in top 1
+Epoch 186, global step 18700: 'val_DSC' was not in top 1
+Epoch 187, global step 18800: 'val_DSC' was not in top 1
+Epoch 188, global step 18900: 'val_DSC' was not in top 1
+Epoch 189, global step 19000: 'val_DSC' was not in top 1
+Epoch 190, global step 19100: 'val_DSC' was not in top 1
+Epoch 191, global step 19200: 'val_DSC' was not in top 1
+Epoch 192, global step 19300: 'val_DSC' was not in top 1
+Epoch 193, global step 19400: 'val_DSC' was not in top 1
+Epoch 194, global step 19500: 'val_DSC' was not in top 1
+Epoch 195, global step 19600: 'val_DSC' was not in top 1
+Epoch 196, global step 19700: 'val_DSC' was not in top 1
+Epoch 197, global step 19800: 'val_DSC' was not in top 1
+Epoch 198, global step 19900: 'val_DSC' was not in top 1
+Epoch 199, global step 20000: 'val_DSC' was not in top 1
+Epoch 200, global step 20100: 'val_DSC' was not in top 1
+Epoch 201, global step 20200: 'val_DSC' was not in top 1
+Epoch 202, global step 20300: 'val_DSC' was not in top 1
+Epoch 203, global step 20400: 'val_DSC' was not in top 1
+Epoch 204, global step 20500: 'val_DSC' was not in top 1
+Epoch 205, global step 20600: 'val_DSC' was not in top 1
+Epoch 206, global step 20700: 'val_DSC' was not in top 1
+Epoch 207, global step 20800: 'val_DSC' was not in top 1
+Epoch 208, global step 20900: 'val_DSC' was not in top 1
+Epoch 209, global step 21000: 'val_DSC' was not in top 1
+Epoch 210, global step 21100: 'val_DSC' was not in top 1
+Epoch 211, global step 21200: 'val_DSC' was not in top 1
+Epoch 212, global step 21300: 'val_DSC' was not in top 1
+Epoch 213, global step 21400: 'val_DSC' was not in top 1
+Epoch 214, global step 21500: 'val_DSC' was not in top 1
+Epoch 215, global step 21600: 'val_DSC' was not in top 1
+Epoch 216, global step 21700: 'val_DSC' was not in top 1
+Epoch 217, global step 21800: 'val_DSC' was not in top 1
+Epoch 218, global step 21900: 'val_DSC' was not in top 1
+Epoch 219, global step 22000: 'val_DSC' was not in top 1
+Epoch 220, global step 22100: 'val_DSC' was not in top 1
+Epoch 221, global step 22200: 'val_DSC' was not in top 1
+Epoch 222, global step 22300: 'val_DSC' was not in top 1
+Epoch 223, global step 22400: 'val_DSC' was not in top 1
+Epoch 224, global step 22500: 'val_DSC' was not in top 1
+Epoch 225, global step 22600: 'val_DSC' was not in top 1
+Epoch 226, global step 22700: 'val_DSC' was not in top 1
+Epoch 227, global step 22800: 'val_DSC' was not in top 1
+Epoch 228, global step 22900: 'val_DSC' was not in top 1
+Epoch 229, global step 23000: 'val_DSC' was not in top 1
+Epoch 230, global step 23100: 'val_DSC' was not in top 1
+Epoch 231, global step 23200: 'val_DSC' was not in top 1
+Epoch 232, global step 23300: 'val_DSC' was not in top 1
+Epoch 233, global step 23400: 'val_DSC' was not in top 1
+Epoch 234, global step 23500: 'val_DSC' was not in top 1
+Epoch 235, global step 23600: 'val_DSC' was not in top 1
+Epoch 236, global step 23700: 'val_DSC' was not in top 1
+Epoch 237, global step 23800: 'val_DSC' was not in top 1
+Epoch 238, global step 23900: 'val_DSC' was not in top 1
+Epoch 239, global step 24000: 'val_DSC' was not in top 1
+Epoch 240, global step 24100: 'val_DSC' was not in top 1
+Epoch 241, global step 24200: 'val_DSC' was not in top 1
+Epoch 242, global step 24300: 'val_DSC' was not in top 1
+Epoch 243, global step 24400: 'val_DSC' was not in top 1
+Epoch 244, global step 24500: 'val_DSC' was not in top 1
+Epoch 245, global step 24600: 'val_DSC' was not in top 1
+Epoch 246, global step 24700: 'val_DSC' was not in top 1
+Epoch 247, global step 24800: 'val_DSC' was not in top 1
+Epoch 248, global step 24900: 'val_DSC' was not in top 1
+Epoch 249, global step 25000: 'val_DSC' was not in top 1
+Epoch 250, global step 25100: 'val_DSC' was not in top 1
+Epoch 251, global step 25200: 'val_DSC' was not in top 1
+Epoch 252, global step 25300: 'val_DSC' was not in top 1
+Epoch 253, global step 25400: 'val_DSC' was not in top 1
+Epoch 254, global step 25500: 'val_DSC' was not in top 1
+Epoch 255, global step 25600: 'val_DSC' was not in top 1
+Epoch 256, global step 25700: 'val_DSC' was not in top 1
+Epoch 257, global step 25800: 'val_DSC' was not in top 1
+Epoch 258, global step 25900: 'val_DSC' was not in top 1
+Epoch 259, global step 26000: 'val_DSC' was not in top 1
+Epoch 260, global step 26100: 'val_DSC' was not in top 1
+Epoch 261, global step 26200: 'val_DSC' was not in top 1
+Epoch 262, global step 26300: 'val_DSC' was not in top 1
+Epoch 263, global step 26400: 'val_DSC' was not in top 1
+Epoch 264, global step 26500: 'val_DSC' was not in top 1
+Epoch 265, global step 26600: 'val_DSC' was not in top 1
+Epoch 266, global step 26700: 'val_DSC' was not in top 1
+Epoch 267, global step 26800: 'val_DSC' was not in top 1
+Epoch 268, global step 26900: 'val_DSC' was not in top 1
+Epoch 269, global step 27000: 'val_DSC' was not in top 1
+Epoch 270, global step 27100: 'val_DSC' was not in top 1
+Epoch 271, global step 27200: 'val_DSC' was not in top 1
+Epoch 272, global step 27300: 'val_DSC' was not in top 1
+Epoch 273, global step 27400: 'val_DSC' was not in top 1
+Epoch 274, global step 27500: 'val_DSC' was not in top 1
+Epoch 275, global step 27600: 'val_DSC' was not in top 1
+Epoch 276, global step 27700: 'val_DSC' was not in top 1
+Epoch 277, global step 27800: 'val_DSC' was not in top 1
+Epoch 278, global step 27900: 'val_DSC' was not in top 1
+Epoch 279, global step 28000: 'val_DSC' was not in top 1
+Epoch 280, global step 28100: 'val_DSC' was not in top 1
+Epoch 281, global step 28200: 'val_DSC' was not in top 1
+Epoch 282, global step 28300: 'val_DSC' was not in top 1
+Epoch 283, global step 28400: 'val_DSC' was not in top 1
+Epoch 284, global step 28500: 'val_DSC' was not in top 1
+Epoch 285, global step 28600: 'val_DSC' was not in top 1
+Epoch 286, global step 28700: 'val_DSC' was not in top 1
+Epoch 287, global step 28800: 'val_DSC' was not in top 1
+Epoch 288, global step 28900: 'val_DSC' was not in top 1
+Epoch 289, global step 29000: 'val_DSC' was not in top 1
+Epoch 290, global step 29100: 'val_DSC' was not in top 1
+Epoch 291, global step 29200: 'val_DSC' was not in top 1
+Epoch 292, global step 29300: 'val_DSC' was not in top 1
+Epoch 293, global step 29400: 'val_DSC' was not in top 1
+Epoch 294, global step 29500: 'val_DSC' was not in top 1
+Epoch 295, global step 29600: 'val_DSC' was not in top 1
+Epoch 296, global step 29700: 'val_DSC' was not in top 1
+Epoch 297, global step 29800: 'val_DSC' was not in top 1
+Epoch 298, global step 29900: 'val_DSC' was not in top 1
+Epoch 299, global step 30000: 'val_DSC' was not in top 1
+Epoch 300, global step 30100: 'val_DSC' was not in top 1
+Epoch 301, global step 30200: 'val_DSC' was not in top 1
+Epoch 302, global step 30300: 'val_DSC' was not in top 1
+Epoch 303, global step 30400: 'val_DSC' was not in top 1
+Epoch 304, global step 30500: 'val_DSC' was not in top 1
+Epoch 305, global step 30600: 'val_DSC' was not in top 1
+Epoch 306, global step 30700: 'val_DSC' was not in top 1
+Epoch 307, global step 30800: 'val_DSC' was not in top 1
+Epoch 308, global step 30900: 'val_DSC' was not in top 1
+Epoch 309, global step 31000: 'val_DSC' was not in top 1
+Epoch 310, global step 31100: 'val_DSC' was not in top 1
+Epoch 311, global step 31200: 'val_DSC' was not in top 1
+Epoch 312, global step 31300: 'val_DSC' was not in top 1
+Epoch 313, global step 31400: 'val_DSC' was not in top 1
+Epoch 314, global step 31500: 'val_DSC' was not in top 1
+Epoch 315, global step 31600: 'val_DSC' was not in top 1
+Epoch 316, global step 31700: 'val_DSC' was not in top 1
+Epoch 317, global step 31800: 'val_DSC' was not in top 1
+Epoch 318, global step 31900: 'val_DSC' was not in top 1
+Epoch 319, global step 32000: 'val_DSC' was not in top 1
+Epoch 320, global step 32100: 'val_DSC' was not in top 1
+Epoch 321, global step 32200: 'val_DSC' was not in top 1
+Epoch 322, global step 32300: 'val_DSC' was not in top 1
+Epoch 323, global step 32400: 'val_DSC' was not in top 1
+Epoch 324, global step 32500: 'val_DSC' was not in top 1
+Epoch 325, global step 32600: 'val_DSC' was not in top 1
+Epoch 326, global step 32700: 'val_DSC' was not in top 1
+Epoch 327, global step 32800: 'val_DSC' was not in top 1
+Epoch 328, global step 32900: 'val_DSC' was not in top 1
+Epoch 329, global step 33000: 'val_DSC' was not in top 1
+Epoch 330, global step 33100: 'val_DSC' was not in top 1
+Epoch 331, global step 33200: 'val_DSC' was not in top 1
+Epoch 332, global step 33300: 'val_DSC' was not in top 1
+Epoch 333, global step 33400: 'val_DSC' was not in top 1
+Epoch 334, global step 33500: 'val_DSC' was not in top 1
+Epoch 335, global step 33600: 'val_DSC' was not in top 1
+Epoch 336, global step 33700: 'val_DSC' was not in top 1
+Epoch 337, global step 33800: 'val_DSC' was not in top 1
+Epoch 338, global step 33900: 'val_DSC' reached 0.82879 (best 0.82879), saving model to '/hpctmp/e0983169/checkpoints/iMeshSegNet_mix_new_17_Classes_32_f_best_DSC.ckpt' as top 1
+Epoch 339, global step 34000: 'val_DSC' was not in top 1
+Epoch 340, global step 34100: 'val_DSC' was not in top 1
+Epoch 341, global step 34200: 'val_DSC' was not in top 1
+Epoch 342, global step 34300: 'val_DSC' was not in top 1
+Epoch 343, global step 34400: 'val_DSC' was not in top 1
+Epoch 344, global step 34500: 'val_DSC' was not in top 1
+Epoch 345, global step 34600: 'val_DSC' was not in top 1
+Epoch 346, global step 34700: 'val_DSC' was not in top 1
+Epoch 347, global step 34800: 'val_DSC' was not in top 1
+Epoch 348, global step 34900: 'val_DSC' was not in top 1
+Epoch 349, global step 35000: 'val_DSC' was not in top 1
+Epoch 350, global step 35100: 'val_DSC' was not in top 1
+Epoch 351, global step 35200: 'val_DSC' was not in top 1
+Epoch 352, global step 35300: 'val_DSC' was not in top 1
+Epoch 353, global step 35400: 'val_DSC' was not in top 1
+Epoch 354, global step 35500: 'val_DSC' was not in top 1
+Epoch 355, global step 35600: 'val_DSC' was not in top 1
+Epoch 356, global step 35700: 'val_DSC' was not in top 1
+Epoch 357, global step 35800: 'val_DSC' was not in top 1
+Epoch 358, global step 35900: 'val_DSC' was not in top 1
+Epoch 359, global step 36000: 'val_DSC' was not in top 1
+Epoch 360, global step 36100: 'val_DSC' was not in top 1
+Epoch 361, global step 36200: 'val_DSC' was not in top 1
+Epoch 362, global step 36300: 'val_DSC' was not in top 1
+Epoch 363, global step 36400: 'val_DSC' was not in top 1
+Epoch 364, global step 36500: 'val_DSC' was not in top 1
+Epoch 365, global step 36600: 'val_DSC' was not in top 1
+Epoch 366, global step 36700: 'val_DSC' was not in top 1
+Epoch 367, global step 36800: 'val_DSC' was not in top 1
+Epoch 368, global step 36900: 'val_DSC' was not in top 1
+Epoch 369, global step 37000: 'val_DSC' was not in top 1
+Epoch 370, global step 37100: 'val_DSC' was not in top 1
+Epoch 371, global step 37200: 'val_DSC' was not in top 1
+Epoch 372, global step 37300: 'val_DSC' was not in top 1
+Epoch 373, global step 37400: 'val_DSC' was not in top 1
+Epoch 374, global step 37500: 'val_DSC' was not in top 1
+Epoch 375, global step 37600: 'val_DSC' was not in top 1
+Epoch 376, global step 37700: 'val_DSC' was not in top 1
+Epoch 377, global step 37800: 'val_DSC' was not in top 1
+Epoch 378, global step 37900: 'val_DSC' was not in top 1
+Epoch 379, global step 38000: 'val_DSC' was not in top 1
+Epoch 380, global step 38100: 'val_DSC' was not in top 1
+Epoch 381, global step 38200: 'val_DSC' was not in top 1
+Epoch 382, global step 38300: 'val_DSC' was not in top 1
+Epoch 383, global step 38400: 'val_DSC' was not in top 1
+Epoch 384, global step 38500: 'val_DSC' was not in top 1
+Epoch 385, global step 38600: 'val_DSC' was not in top 1
+Epoch 386, global step 38700: 'val_DSC' was not in top 1
+Epoch 387, global step 38800: 'val_DSC' was not in top 1
+Epoch 388, global step 38900: 'val_DSC' was not in top 1
+Epoch 389, global step 39000: 'val_DSC' was not in top 1
+Epoch 390, global step 39100: 'val_DSC' was not in top 1
+Epoch 391, global step 39200: 'val_DSC' was not in top 1
+Epoch 392, global step 39300: 'val_DSC' was not in top 1
+Epoch 393, global step 39400: 'val_DSC' was not in top 1
+Epoch 394, global step 39500: 'val_DSC' was not in top 1
+Epoch 395, global step 39600: 'val_DSC' was not in top 1
+Epoch 396, global step 39700: 'val_DSC' was not in top 1
+Epoch 397, global step 39800: 'val_DSC' was not in top 1
+Epoch 398, global step 39900: 'val_DSC' was not in top 1
+Epoch 399, global step 40000: 'val_DSC' was not in top 1
+`Trainer.fit` stopped: `max_epochs=400` reached.

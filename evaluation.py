@@ -126,12 +126,12 @@ def do_eva(pred_path, constrain='upper'):
         
 
 if __name__ == '__main__':
-    mode = 'old'
-    with_new_feature = False if mode == 'old' else True
+    mode = 'ori'
+    with_new_feature = True if mode == 'new' else False
     dataset_path = './dataset/test_set'
     output_path = f'./preds_{mode}.json'
     cfg_path = './config/default.yaml'
-    checkpoint_path = f'./checkpoints/iMeshSegNet_17_Classes_32_f_best_DSC_{mode}.ckpt'
+    checkpoint_path = f'./checkpoints/iMeshSegNet_mix_{mode}_17_Classes_32_f_best_DSC.ckpt'
     device = 'cuda'
     
     do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_features=with_new_feature)

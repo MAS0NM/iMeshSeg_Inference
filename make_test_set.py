@@ -1,11 +1,36 @@
 from utils import read_dir, read_filenames, filelist_checker
 from preprocessing import *
 from os import cpu_count
+import csv
 
 
 def make_augmentated_stl(filelist, stl_dir):
     existing_mesh_files = read_dir(dir_path=stl_dir, extension='stl', constrain='')
     do_augmentation('', stl_dir, aug_num=1, existing_mesh_files=existing_mesh_files, filelist=filelist, ext='.stl')
+    
+    
+def read_from_csv(file_path):
+    samples = []
+    labels = []
+    with open(file_path, 'r') as f:
+        csv_reader = csv.reader(f)
+        for row in csv_reader:
+            samples.append(row[0])
+            labels.append(row[1])
+    return samples, labels
+
+
+def get_labels_by_sample(file_list, label_paths):
+    lower_labels, upper_labels = read_filenames(label_paths)
+    labels = lower_labels + upper_labels
+    lookup_table = [get_sample_name(i) for i in labels]
+    print(labels[:10])
+    res = []
+    for item in file_list:
+        if get_sample_name(item) in lookup_table:
+            res.append(item)
+    return res
+
 
 if __name__ == '__main__':
     dir_paths = ['./dataset/3D_scans_per_patient_obj_files_b1', './dataset/3D_scans_per_patient_obj_files_b2']
@@ -23,11 +48,14 @@ if __name__ == '__main__':
     fileList_lower = '/fileList_lower.txt'
     fileList_upper = '/fileList_upper.txt'
     
+    test_set_path = './tst_list.csv'
+    test_set_samples, test_set_labels = read_from_csv(test_set_path)
     
     target_cells = 10001
     existing_mesh_files = read_dir(dir_path=downsampled_dataset, extension='vtk', constrain='')
-    do_downsample(upper_jaws[:40], upper_labels[:40], target_cells=target_cells, ds_dir = downsampled_dataset)
-    do_downsample(lower_jaws[:40], lower_labels[:40], target_cells=target_cells, ds_dir = downsampled_dataset)
+    # do_downsample(upper_jaws[:40], upper_labels[:40], target_cells=target_cells, ds_dir = downsampled_dataset)
+    # do_downsample(lower_jaws[:40], lower_labels[:40], target_cells=target_cells, ds_dir = downsampled_dataset)
+    do_downsample(test_set_samples, test_set_labels, target_cells=target_cells, ds_dir = downsampled_dataset)
     print(f"downsampling is done")
     do_augmentation(ip_dir=downsampled_dataset, op_dir=downsampled_dataset, aug_num=1, existing_mesh_files=existing_mesh_files)
     print(f"augmentation is done")

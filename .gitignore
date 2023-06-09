@@ -2,4 +2,4 @@ __pycache__
 *.pyc
 dataset/*
 *.txt
-*.json
+# *.json

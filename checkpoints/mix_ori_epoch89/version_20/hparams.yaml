@@ -1,0 +1,48 @@
+learning_rate: 0.0069
+cfg:
+  seed: 42
+  model:
+    name: iMeshSegNet
+    num_classes: 17
+    num_channels: 15
+    with_dropout: true
+    dropout_p: 0.5
+    patch_size: 7000
+  train:
+    data_mode: h5
+    hdf5_path: ./dataset/3D_scans_h5/mix_ori.hdf5
+    checkpoint_dir: /hpctmp/e0983169/checkpoints/
+    model_name: latest_checkpoint.pth
+    pretrain_file: null
+    benchmark: false
+    deterministic: false
+    accelerator: cuda
+    devices:
+    - 0
+    strategy: ddp
+    epochs: 400
+    precision: 32
+    accumulate_grad_batches: 1
+    auto_lr_find: false
+    auto_scale_batch_size: false
+    fast_dev_run: false
+    optimizer: adam
+    learning_rate: 0.0069
+    weight_decay: 0
+    step_size: 20
+    gamma: 0.1
+    check_val_every_n_epoch: 1
+    multiGPU: 1
+  logger:
+    use: true
+    project: tooth seg
+    log_every_n_steps: 10
+  dataloader:
+    batch_size: 32
+    num_workers: 10
+    trn_list: ./dataset/FileLists/trn_list.csv
+    val_list: ./dataset/FileLists/val_list.csv
+  infer:
+    devices:
+    - 0
+    accelerator: gpu
