@@ -33,3 +33,7 @@ the `do_eva` function will read the predicted results from that json file and ev
 or
 
 `tensorboard --logdir=./checkpoints/mix_new_epoch339/version_19`
+
+
+## Contribution
+Apart from those codes under `./model`.
