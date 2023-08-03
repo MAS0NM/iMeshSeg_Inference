@@ -54,7 +54,7 @@ if __name__ == '__main__':
     existing_mesh_files = read_dir(dir_path=downsampled_dataset, extension='vtk', constrain='')
     # do_downsample(upper_jaws[:40], upper_labels[:40], target_cells=target_cells, ds_dir = downsampled_dataset)
     # do_downsample(lower_jaws[:40], lower_labels[:40], target_cells=target_cells, ds_dir = downsampled_dataset)
-    # do_downsample(test_set_samples, test_set_labels, target_cells=target_cells, ds_dir = downsampled_dataset)
+    do_downsample(test_set_samples, test_set_labels, target_cells=target_cells, ds_dir = downsampled_dataset)
     # print(f"downsampling is done")
     # do_augmentation(ip_dir=downsampled_dataset, op_dir=downsampled_dataset, aug_num=1, existing_mesh_files=existing_mesh_files)
     # print(f"augmentation is done")

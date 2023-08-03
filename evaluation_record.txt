@@ -1,0 +1,13 @@
+Original (recorded on 3rd Aug 2023)
+get 100 files for evaluation
+inferencing: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [10:19<00:00,  6.20s/it]
+evaluation for 
+The average mIoU for original is 0.8077665897530018 ± 0.1566421776467795
+The average accuracy for original is 0.9107360000000001 ± 0.08065643498196533
+
+New (recorded on 3rd Aug 2023)
+get 100 files for evaluation
+inferencing: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [07:51<00:00,  4.71s/it]
+evaluation for 
+The average mIoU for original is 0.765703090100661 ± 0.1625940426228859
+The average accuracy for original is 0.8821087418134081 ± 0.09198537936566478

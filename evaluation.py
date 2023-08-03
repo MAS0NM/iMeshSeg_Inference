@@ -129,7 +129,7 @@ def do_eva(pred_path, constrain=''):
         
 
 if __name__ == '__main__':
-    mode = 'ori'
+    mode = 'new'
     with_new_feature = True if mode == 'new' else False
     dataset_path = './dataset/test_set'
     output_path = f'./preds_{mode}.json'
