@@ -8,6 +8,7 @@ from tqdm import tqdm
 import json
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
+import random
 
 
 def cal_mIoU(grtr, pred, cm=None):
@@ -56,7 +57,9 @@ def do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_featur
     '''
     eval_list = recursively_get_file(dataset_path, ext='vtk')
     # samples = [item for item in eval_list if 'upper' in item][:200]
-    samples = eval_list[:200]
+    random.shuffle(eval_list)
+    samples = eval_list[:100]
+    print(samples[:10])
     print(f'get {len(samples)} files for evaluation')
     
     cfg = OmegaConf.load(cfg_path)
@@ -87,7 +90,7 @@ def eva_on_one_sample(item):
     return sample_name, mIoU, acc
 
         
-def do_eva(pred_path, constrain='upper'):
+def do_eva(pred_path, constrain=''):
     print(f'evaluation for {constrain}')
     with open(pred_path, 'r') as f:
         pred_res = json.load(f)
@@ -99,7 +102,7 @@ def do_eva(pred_path, constrain='upper'):
     
     for item in pred_res.items():
         sample_name, mIoU, acc = eva_on_one_sample(item)
-        if constrain not in sample_name:
+        if constrain and constrain not in sample_name:
             continue
         if '_FLP' in sample_name:
             flip.append((mIoU, acc))
@@ -136,5 +139,5 @@ if __name__ == '__main__':
     
     do_inf(dataset_path, cfg_path, checkpoint_path, output_path, with_new_features=with_new_feature)
     
-    do_eva(output_path, constrain='upper')
-    do_eva(output_path, constrain='lower')
+    do_eva(output_path)
+    # do_eva(output_path, constrain='lower')

@@ -199,7 +199,6 @@ def augment(mesh_path, out_dir, mode, aug_num, existing_mesh_files, isRotate, is
         
             mesh = vedo.load(mesh_path)
             mesh.apply_transform(vtk_matrix)
-            mesh = centring(mesh)
             mesh.write(mesh_op_pth)
             
         

@@ -2,6 +2,7 @@ import pyvista as pv
 import re
 import glob
 import os
+import vedo
 
 
 def read_filelist(file_path):
@@ -130,3 +131,12 @@ def recursively_get_file(dir_path, ext):
         elif os.path.isdir(f'{dir_path}/{file}'):
             ls += recursively_get_file(f'{dir_path}/{file}', ext)
     return ls
+
+
+def vtk2stl(ip_dir, des_dir):
+    samples = glob.glob(f"{ip_dir}*.vtk")
+    for file in samples:
+        mesh = vedo.Mesh(file)
+        name = os.path.splitext(os.path.basename(file))[0]
+        des_file = os.path.join(des_dir, name + '.stl')
+        mesh.write(des_file)
